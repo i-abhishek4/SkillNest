@@ -28,12 +28,12 @@ exports.register = async (req, res) => {
 
 
 exports.login = (req, res, next) => {
-    passport.authenticate("freelancer-local", { failureRedirect: "/login", failureFlash: true }, (err, user, info) => {
+    passport.authenticate("freelancer-local", { failureRedirect: "freelancer/login", failureFlash: true }, (err, user, info) => {
         if (err) return next(err);
         if (!user) {
             // req.flash("error", "Invalid credentials");
             console.log("invliad creds")
-            return res.redirect("/login");
+            return res.redirect("freelancer/login");
         }
 
         req.logIn(user, (err) => {

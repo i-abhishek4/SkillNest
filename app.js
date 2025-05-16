@@ -52,7 +52,9 @@ passport.deserializeUser(async ({id,role},done)=>{
 
 //routes
 app.use("/freelancer",require("./backend/routes/freelancers"));
-// app.use("/client",require("./backend/routes/clients"));
+app.use("/client",require("./backend/routes/clients"));
+app.use("/projects",require("./backend/routes/projects"));
+
 
 
 

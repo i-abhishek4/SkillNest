@@ -1,7 +1,5 @@
 const express=require("express");
 const router=express.Router();
-const passport=require("passport");
-const session=require("express-session");
 const freelacerController=require("../controllers/freelancerController");
 
 

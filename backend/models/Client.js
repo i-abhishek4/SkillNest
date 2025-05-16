@@ -8,5 +8,5 @@ const clientSchema=new mongoose.Schema({
     profileUrl:{type:String,default:"https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?semt=ais_hybrid&w=740"}
 })
 
-clientSchema.plugin(passportLocalMongoose);
+clientSchema.plugin(passportLocalMongoose,{ usernameField: 'email', usernameUnique: false});
 module.exports=mongoose.model("Client",clientSchema);
