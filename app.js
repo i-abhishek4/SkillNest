@@ -45,6 +45,11 @@ passport.deserializeUser(async ({id,role},done)=>{
         }else if(role==='Freelancer'){
             account=await Freelancer.findById(id);
         }
+        if (account) {
+            done(null, account); 
+        } else {
+            done(null, false);
+        }
     }catch(err){
         done(err);
     }

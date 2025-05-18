@@ -25,7 +25,7 @@ const projectSchema = new mongoose.Schema({
             "Sales & Marketing",
             "Others"
         ],
-        required: true
+        // required: true
     },
     budget: { type: String, required: true },
     status: {
