@@ -34,15 +34,16 @@ const projectSchema = new mongoose.Schema({
         default: 'open'
     },
     applications:[{
-        freelancerId:{
             type:mongoose.Schema.Types.ObjectId,
             ref:'Freelancer'
-        }
+
     }],
-    status:{
-        type:String,
-        enum:["pending","accepted","rejected"]
-    }
+    assignedTo: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Freelancer",
+        default: null,
+      },
+
 });
 
 module.exports=mongoose.model("Project",projectSchema);
