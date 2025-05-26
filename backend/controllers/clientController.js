@@ -8,22 +8,31 @@ const { TopologyDescription } = require("mongodb");
 exports.register = async (req, res) => {
     const { companyName, email, password } = req.body;
     try {
-        const existing = Client.findOne({ email });
+        const existing = await Client.findOne({ email });
         if (existing) {
-            res.json({ message: "Email already exists" });
+            return res.status(400).json({success:false, message: "Email already registerd" });
         }
         const newClient = new Client({ companyName, email });
 
-        const registeredClient = Client.register(newClient, password);
+        const registeredClient =await Client.register(newClient, password);
         req.login(registeredClient, (err) => {
             if (err) {
                 console.log(err);
-            }
-            console.log(req.user);
+                return res.status(500).json({ success: false, message: "Login failed after signup", });
+              }
+            console.log("User after login",req.user);
+            return res.status(201).json({ success: true, message: "Signup successful",user:{id:registeredClient._id,name: registeredClient.name,
+                email: registeredClient.email,
+                role: registeredClient.role} });
         })
 
     } catch (err) {
-
+        console.log(err.message);
+        if(err.name === "UserExistsError"){
+            return res.json({success:false, message: "Email already exists"});
+        }
+        // generic error
+        return res.json({success:false, message: "Something went wrong"});
     }
 }
 
@@ -38,7 +47,9 @@ exports.login = (req, res, next) => {
             if (err) return next(err);
             console.log("logged in siccessfully")
             // return res.redirect("/client/dashboard");
-            return res.json(req.user);
+            return res.json({success:true,message:"log in successfull",user:{id:user._id,name: user.name,
+                email: user.email,
+                role: user.role}});
         })
     })(req, res, next);
 };

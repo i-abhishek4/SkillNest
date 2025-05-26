@@ -5,6 +5,8 @@ const Freelancer=require("./backend/models/Freelancer");
 const Client=require("./backend/models/Client");
 const passport=require("passport");
 const session=require("express-session");
+const cors=require("cors");
+
 
 
 //mongo connection
@@ -15,6 +17,10 @@ mongoose.connect("mongodb://localhost:27017/skillnest")
 //middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors({
+    origin:"http://localhost:5173",
+    credentials:true
+}))
 
 // session middleware
 const sessionoptions = {
@@ -59,6 +65,7 @@ passport.deserializeUser(async ({id,role},done)=>{
 app.use("/freelancer",require("./backend/routes/freelancers"));
 app.use("/client",require("./backend/routes/clients"));
 app.use("/projects",require("./backend/routes/projects"));
+
 
 
 

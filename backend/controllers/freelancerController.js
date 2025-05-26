@@ -2,13 +2,14 @@ const passport = require("passport");
 const Freelancer = require("../models/Freelancer");
 const Project = require("../models/Project");
 
+
 exports.register = async (req, res) => {
     const { name, email, password, skills, bio, } = req.body;
 
     try {
         const existing = await Freelancer.findOne({ email });
         if (existing) {
-            res.status(400).json({ message: "Eamila already registerd" });
+            return res.status(400).json({success:false, message: "Email already registerd" });
         }
         const newFreelancer = new Freelancer({ name, email, skills, bio });
 
@@ -17,16 +18,30 @@ exports.register = async (req, res) => {
         req.login(registeredFreelancer, (err) => {
             if (err) {
                 console.log(err);
-            }
-            console.log(req.user);
+                return res.status(500).json({ success: false, message: "Login failed after signup"});
+              }
+            console.log("User after login",req.user);
+            return res.status(201).json({ success: true, message: "Signup successful",user:{id:registeredFreelancer._id,name: registeredFreelancer.name,
+                email: registeredFreelancer.email,
+                role: registeredFreelancer.role}});
 
         })
     }catch(err){
-        console.log(err);
+        console.log(err.message);
+        if(err.name === "UserExistsError"){
+            return res.json({success:false, message: "Email already exists"});
+        }
+        // generic error
+        return res.json({success:false, message: "Something went wrong"});
+        
+        
     }
     
 }
 
+// exports.dashboard=(req,res)=>{
+//     return res.json({message:"Freelancer dashboard"})
+// }
 
 exports.login = (req, res, next) => {
     passport.authenticate("freelancer-local", { failureRedirect: "freelancer/login", failureFlash: true }, (err, user, info) => {
@@ -39,11 +54,11 @@ exports.login = (req, res, next) => {
 
         req.logIn(user, (err) => {
             if (err) return next(err);
-            // req.flash("success", "Logged in successfully!");
             console.log("logged in siccessfully")
-            // return res.redirect("/freelancer/dashboard");
             console.log("req.user before check:", req.user);
-            return res.json({message:"log in successfull"});
+            return res.json({success:true,message:"log in successfull",user:{id:user._id,name: user.name,
+                email: user.email,
+                role: user.role}});
         });
     })(req, res, next);
 };
