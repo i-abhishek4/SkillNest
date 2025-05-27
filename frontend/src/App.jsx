@@ -7,6 +7,9 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Header } from './Components/Header';
+import { Footer } from './Components/Footer';
+import { Jobs } from './Pages/Jobs';
+import { ProjectDetails } from './Pages/ProjectDetails';
 
 
 
@@ -19,18 +22,25 @@ function App() {
 
   return (
     <Router>
-      <Header />
-      <ToastContainer position="top-right" autoClose={2000} />
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/signup' element={<Signup />} />
-        <Route path="/jobs" element={<FindJobs />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/freelancers" element={<FindFreelancers />} />
-        <Route path='/freelancer/dashboard' element={<FreelancerDashboard />} />
-        <Route path='/client/dashboard' element={<ClientDashboard />} />
-      </Routes>
+      <div className="flex flex-col min-h-screen">
+        <Header />
+        <main className="flex-grow">
+          <ToastContainer position="top-right" autoClose={2000} />
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/signup' element={<Signup />} />
+            <Route path="/jobs" element={<Jobs />} />
+            <Route path="/projects/:id" element={<ProjectDetails />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/freelancers" element={<FindFreelancers />} />
+            <Route path='/freelancer/dashboard' element={<FreelancerDashboard />} />
+            <Route path='/client/dashboard' element={<ClientDashboard />} />
+
+          </Routes>
+        </main>
+        <Footer />
+      </div>
     </Router>
     // <div>
     //   <Login/>

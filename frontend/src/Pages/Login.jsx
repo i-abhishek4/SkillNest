@@ -34,7 +34,7 @@ export const Login = () => {
                 ? "http://localhost:3000/client/login"
                 : "http://localhost:3000/freelancer/login"
 
-            const response = await axios.post(endpoint, payload);
+            const response = await axios.post(endpoint, payload,{withCredentials:true});
             if (response.data.success) {
                 const user=response.data.user;
                 login(user,role);

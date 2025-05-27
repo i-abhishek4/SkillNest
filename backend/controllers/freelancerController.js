@@ -123,10 +123,14 @@ exports.applyToProject=async(req,res)=>{
     if(!project || !freelancer){
         return res.json({message:"Project or freelancer deoes exist"});
     }
-    const alreadyApplied=project.applications.includes(freelancerId);
-    if(alreadyApplied){
-        return res.json({message:"Already applied to this project"});
-    }
+    const alreadyApplied = project.applications
+    .map(id => id.toString())
+    .includes(freelancerId.toString());
+  console.log("Already applied?",alreadyApplied);
+  if (alreadyApplied) {
+    return res.json({ message: "Already applied to this project" });
+  }
+  
     project.applications.push(freelancerId);
     await project.save();
     console.log("Succesfully applied to the project");
