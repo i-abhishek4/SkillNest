@@ -1,9 +1,11 @@
-import React from 'react';
+import React,{ useContext} from 'react';
+import { AuthContext } from '../contexts/AuthContext';
 
  export const FreelancerDashboard = () => {
-    const user = JSON.parse(localStorage.getItem("user"));
+    const {user,role,isLoggedIn} = useContext(AuthContext);
+    console.log("User",user)
 
-  if (!user) {
+  if (!isLoggedIn) {
     return <p>Please login first.</p>;
   }
   return (

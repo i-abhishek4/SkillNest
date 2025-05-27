@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
+import { AuthContext } from '../contexts/AuthContext';
 import axios from "axios";
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
@@ -15,6 +16,8 @@ export const Signup = () => {
     skills: [],
     bio: ""
   });
+
+  const {login}=useContext(AuthContext);
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -43,7 +46,7 @@ export const Signup = () => {
       const response = await axios.post(endpoint, payload);
       if (response.data.success) {
         const user=response.data.user;
-                localStorage.setItem("user", JSON.stringify(user));
+                login(user,role);
                 toast.success(response.data.message,{
                     onClose: () => navigate(`/${role}/dashboard`),
                     autoClose: 1500});

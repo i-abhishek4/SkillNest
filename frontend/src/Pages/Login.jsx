@@ -2,7 +2,9 @@ import React, { useState } from 'react'
 import axios from "axios";
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-
+import {Link} from "react-router-dom"
+import { useContext } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
 
 
 export const Login = () => {
@@ -12,6 +14,8 @@ export const Login = () => {
         email: "",
         password: ""
     });
+
+    const {login} =useContext(AuthContext);
 
     const handleChange = (e) => {
         setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -33,7 +37,7 @@ export const Login = () => {
             const response = await axios.post(endpoint, payload);
             if (response.data.success) {
                 const user=response.data.user;
-                localStorage.setItem("user", JSON.stringify(user));
+                login(user,role);
                 toast.success(response.data.message,{
                     onClose: () => navigate(`/${role}/dashboard`),
                     autoClose: 1500});
@@ -73,6 +77,9 @@ export const Login = () => {
                     className='w-full mb-4 p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400' required />
 
                 <button type='submit' className='w-full bg-blue-600 text-white py-3 rounded hover:bg-blue-700 transition'>Create Account</button>
+                <Link to="/signup" className='block text-center text-blue-700 hover:underline'>
+                    Don't have an account? Signup
+                </Link>
             </form>
         </div>
     )

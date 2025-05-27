@@ -1,9 +1,10 @@
-import React from 'react';
+import React,{ useContext} from 'react';
+import { AuthContext } from '../contexts/AuthContext';
 
  export const ClientDashboard = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const {user,role,isLoggedIn} = useContext(AuthContext);
 
-  if (!user) {
+  if (!isLoggedIn) {
     return <p>Please login first.</p>;
   }
   return (
