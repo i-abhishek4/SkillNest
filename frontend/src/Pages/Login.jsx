@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from "axios";
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 import {Link} from "react-router-dom"
 import { useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
@@ -9,6 +9,7 @@ import { AuthContext } from '../contexts/AuthContext';
 
 export const Login = () => {
     const navigate = useNavigate();
+    const location=useLocation();
     const [role, setRole] = useState("freelancer");
     const [formData, setFormData] = useState({
         email: "",
@@ -38,9 +39,9 @@ export const Login = () => {
             if (response.data.success) {
                 const user=response.data.user;
                 login(user,role);
-                toast.success(response.data.message,{
-                    onClose: () => navigate(`/${role}/dashboard`),
-                    autoClose: 1500});
+                toast.success(response.data.message);
+                const redirectTo = location.state?.from || "/freelancer/dashboard";
+                navigate(redirectTo);
                 
             } else {
                 toast.error("Login failed: ", response.data.message);

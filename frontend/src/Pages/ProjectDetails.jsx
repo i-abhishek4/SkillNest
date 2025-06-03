@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import {toast} from "react-toastify"
+import { useNavigate,useLocation } from 'react-router-dom';
 
 export const ProjectDetails = () => {
+  const navigate=useNavigate();
+  const location=useLocation();
   const { id } = useParams();
   const [project, setProject] = useState(null);
 
@@ -24,7 +27,14 @@ export const ProjectDetails = () => {
         const res=await axios.post(`http://localhost:3000/freelancer/apply/${id}`,{},{ withCredentials: true });
         toast.success(res.data.message)
     }catch(err){
-        toast.error(err.response?.data?.message || "Failed to apply");
+      if (err.response && err.response.status === 401) {
+        toast.error("Please login to apply for this project.");
+        navigate("/login",{state:{from:location.pathname}}); // Redirect to login
+      } else if (err.response && err.response.data?.message) {
+        toast.error(err.response.data.message); // Custom backend message
+      } else {
+        toast.error("Something went wrong while applying.");
+      }
     }
   }
 
