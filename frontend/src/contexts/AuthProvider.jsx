@@ -1,4 +1,4 @@
-
+import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { AuthContext } from './AuthContext';
 
@@ -28,12 +28,19 @@ const AuthProvider = ({ children }) => {
     localStorage.setItem('role', userRole);
   };
 
-  const logout = () => {
-    setUser(null);
-    setRole(null);
-    setIsLoggedIn(false);
-    localStorage.clear();
+  const logout = async () => {
+    
+    try {
+      await axios.get("http://localhost:3000/auth/logout", { withCredentials: true });
+      setUser(null);
+      setRole(null);
+      setIsLoggedIn(false);
+      localStorage.clear();
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
   };
+  
 
   return (
     <AuthContext.Provider value={{ user, role, isLoggedIn, login, logout }}>

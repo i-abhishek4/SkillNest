@@ -54,16 +54,6 @@ exports.login = (req, res, next) => {
     })(req, res, next);
 };
 
-
-exports.logout = (req, res, next) => {
-    req.logout(function (err) {
-        if (err) {
-            return next(err);
-        }
-        res.redirect("/home");
-    })
-}
-
 exports.getProfile = async (req, res) => {
     try {
         const client = await Client.findById(req.params.id);

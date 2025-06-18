@@ -4,7 +4,6 @@ const clientController=require("../controllers/clientController");
 
 router.post("/register",clientController.register);
 router.post("/login",clientController.login);
-router.get("/logout",clientController.logout)
 router.get("/projects",clientController.getProjects);
 router.get("/:id",clientController.getProfile);
 router.put("/:id",clientController.updateProfile);

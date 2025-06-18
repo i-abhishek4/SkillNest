@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { FaUserCircle } from "react-icons/fa"
 import { useContext } from 'react'
 import { AuthContext } from '../contexts/AuthContext'
+import {toast} from "react-toastify";
 
 export const Header = () => {
     const { user, role, isLoggedIn, logout } = useContext(AuthContext);
@@ -16,6 +17,10 @@ export const Header = () => {
     // }, []);
 
     const handleLogin =()=> navigate("/login");
+    const handleLogout=async()=>{
+        await logout();
+        toast.success("Logged out successfully");
+    }
     return (
         <header className='bg-white shadow-md py-4 px-6'>
             <div className='max-w-7xl mx-auto flex justify-between items-center'>
@@ -33,7 +38,7 @@ export const Header = () => {
                 <div className="flex items-center space-x-4">
                     {isLoggedIn ? (
                         <button
-                        onClick={logout}
+                        onClick={handleLogout}
                         className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
                     >
                         Logout

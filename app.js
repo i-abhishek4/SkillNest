@@ -65,6 +65,7 @@ passport.deserializeUser(async ({id,role},done)=>{
 app.use("/freelancer",require("./backend/routes/freelancers"));
 app.use("/client",require("./backend/routes/clients"));
 app.use("/projects",require("./backend/routes/projects"));
+app.use("/auth", require("./backend/routes/auth"));
 
 
 
