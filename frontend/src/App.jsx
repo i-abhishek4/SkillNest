@@ -10,13 +10,14 @@ import { Header } from './Components/Header';
 import { Footer } from './Components/Footer';
 import { Jobs } from './Pages/Jobs';
 import { ProjectDetails } from './Pages/ProjectDetails';
+import {FindFreelancers} from './Pages/FindFreelancers';
 
 
 
 function App() {
 
   const FindJobs = () => <div className="p-4 text-xl">Find Jobs Page (Coming Soon)</div>;
-  const FindFreelancers = () => <div className="p-4 text-xl">Find Freelancers Page (Coming Soon)</div>;
+  // const FindFreelancers = () => <div className="p-4 text-xl">Find Freelancers Page (Coming Soon)</div>;
   const Home=()=> <div className='p-4 text-xl'>This is Home page(Coming Soom!)</div>
   const Profile=()=> <div className='p-4 text-xl'> This is profile page</div>
 

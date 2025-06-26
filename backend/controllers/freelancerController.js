@@ -39,6 +39,27 @@ exports.register = async (req, res) => {
     
 }
 
+exports.getAllFreelancers=async (req,res)=>{
+    try{
+        const {skill,name}=req.query;
+
+        const query={};
+        if (skill || name) {
+            const search = skill || name;
+            query.$or = [
+              { name: { $regex: search, $options: "i" } },
+              { skills: { $regex: search, $options: "i" } },
+            ];
+          }
+
+        const freelancers = await Freelancer.find(query).select("-password");
+        res.json(freelancers);
+    }catch(err){
+        console.error(err);
+        res.status(500).json({ message: "Server error" });
+    }
+}
+
 // exports.dashboard=(req,res)=>{
 //     return res.json({message:"Freelancer dashboard"})
 // }

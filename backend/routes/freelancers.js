@@ -4,6 +4,7 @@ const freelacerController=require("../controllers/freelancerController");
 const projectController=require("../controllers/projectController");
 
 
+router.get("/",freelacerController.getAllFreelancers);
 router.post("/register",freelacerController.register);
 router.post("/login",freelacerController.login);
 router.get("/logout",freelacerController.logout);
