@@ -65,7 +65,7 @@ exports.getAllFreelancers=async (req,res)=>{
 // }
 
 exports.login = (req, res, next) => {
-    passport.authenticate("freelancer-local", { failureRedirect: "freelancer/login", failureFlash: true }, (err, user, info) => {
+    passport.authenticate("freelancer-local", { failureRedirect: "freelancer/login"}, (err, user, info) => {
         if (err) return next(err);
         if (!user) {
             // req.flash("error", "Invalid credentials");
@@ -156,6 +156,22 @@ exports.applyToProject=async(req,res)=>{
     project.applications.push(freelancerId);
     await project.save();
     console.log("Succesfully applied to the project");
-    return res.json("Applied to the project");
+    return res.json({message:"Applied to the project"});
     
 }
+
+exports.markProjectCompleted = async (req, res) => {
+  try {
+    const { projectId } = req.params;
+    const freelancerId = req.user._id;
+    const project = await Project.findById(projectId);
+    if (!project) return res.status(404).json({ message: "Project not found" });
+    if (String(project.assignedTo) !== String(freelancerId))
+      return res.status(403).json({ message: "You are not assigned to this project" });
+    project.status = "completed";
+    await project.save();
+    res.json({ message: "Project marked as completed" });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+};

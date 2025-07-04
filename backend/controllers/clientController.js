@@ -21,9 +21,10 @@ exports.register = async (req, res) => {
                 return res.status(500).json({ success: false, message: "Login failed after signup", });
               }
             console.log("User after login",req.user);
-            return res.status(201).json({ success: true, message: "Signup successful",user:{id:registeredClient._id,name: registeredClient.name,
+            return res.status(201).json({ success: true, message: "Signup successful",user:{id:registeredClient._id,name: registeredClient.companyName,
                 email: registeredClient.email,
-                role: registeredClient.role} });
+                role: registeredClient.role,
+                companyName: registeredClient.companyName} });
         })
 
     } catch (err) {
@@ -47,7 +48,8 @@ exports.login = (req, res, next) => {
             if (err) return next(err);
             console.log("logged in siccessfully")
             // return res.redirect("/client/dashboard");
-            return res.json({success:true,message:"log in successfull",user:{id:user._id,name: user.name,
+            return res.json({success:true,message:"log in successfull",user:{id:user._id,name: user.companyName,
+                companyName: user.companyName,
                 email: user.email,
                 role: user.role}});
         })

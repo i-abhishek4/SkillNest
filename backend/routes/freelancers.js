@@ -12,6 +12,7 @@ router.get("/logout",freelacerController.logout);
 router.get("/:id",freelacerController.getProfile);
 router.put("/:id",freelacerController.updateProfile);
 router.post("/apply/:id",freelacerController.applyToProject);
+router.put('/complete/:projectId', freelacerController.markProjectCompleted);
 
 
 

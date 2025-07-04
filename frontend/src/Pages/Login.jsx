@@ -40,7 +40,7 @@ export const Login = () => {
                 const user=response.data.user;
                 login(user,role);
                 toast.success(response.data.message);
-                const redirectTo = location.state?.from || "/freelancer/dashboard";
+                const redirectTo = location.state?.from ||`/${role}/dashboard`;
                 navigate(redirectTo);
                 
             } else {

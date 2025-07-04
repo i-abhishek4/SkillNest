@@ -43,7 +43,7 @@ export const Signup = () => {
         role==="client"
           ? "http://localhost:3000/client/register"
           : "http://localhost:3000/freelancer/register"
-      const response = await axios.post(endpoint, payload);
+      const response = await axios.post(endpoint, payload, { withCredentials: true });
       if (response.data.success) {
         const user=response.data.user;
                 login(user,role);

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { Signup } from './Pages/Signup'
 import { Login } from './Pages/Login';
 import { FreelancerDashboard } from './Pages/FreelancerDashboard';
@@ -11,6 +11,9 @@ import { Footer } from './Components/Footer';
 import { Jobs } from './Pages/Jobs';
 import { ProjectDetails } from './Pages/ProjectDetails';
 import {FindFreelancers} from './Pages/FindFreelancers';
+import { AuthContext } from './contexts/AuthContext';
+import { FreelancerProfile } from './Pages/FreelancerProfile';
+import {Home} from './Pages/Home';
 
 
 
@@ -18,7 +21,7 @@ function App() {
 
   const FindJobs = () => <div className="p-4 text-xl">Find Jobs Page (Coming Soon)</div>;
   // const FindFreelancers = () => <div className="p-4 text-xl">Find Freelancers Page (Coming Soon)</div>;
-  const Home=()=> <div className='p-4 text-xl'>This is Home page(Coming Soom!)</div>
+  // const Home=()=> <div className='p-4 text-xl'>This is Home page(Coming Soom!)</div>
   const Profile=()=> <div className='p-4 text-xl'> This is profile page</div>
 
   return (
@@ -37,7 +40,7 @@ function App() {
             <Route path="/freelancers" element={<FindFreelancers />} />
             <Route path='/freelancer/dashboard' element={<FreelancerDashboard />} />
             <Route path='/client/dashboard' element={<ClientDashboard />} />
-
+            <Route path="/freelancer/:id" element={<FreelancerProfile />} />
           </Routes>
         </main>
         <Footer />

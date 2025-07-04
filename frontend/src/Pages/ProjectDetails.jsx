@@ -25,10 +25,10 @@ export const ProjectDetails = () => {
   const handleApply=async ()=>{
     try{
         const res=await axios.post(`http://localhost:3000/freelancer/apply/${id}`,{},{ withCredentials: true });
-        toast.success(res.data.message)
+        toast.success(res.data.message);
     }catch(err){
       if (err.response && err.response.status === 401) {
-        toast.error("Please login to apply for this project.");
+        toast.error(err.response.data.message);
         navigate("/login",{state:{from:location.pathname}}); // Redirect to login
       } else if (err.response && err.response.data?.message) {
         toast.error(err.response.data.message); // Custom backend message

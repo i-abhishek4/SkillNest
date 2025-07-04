@@ -32,8 +32,13 @@ export const Header = () => {
 
                 <nav className='space-x-6 text-gray-700 hidden md:flex'>
                     <Link to="/" className='hover:text-blue-600'>Home</Link>
-                    <Link to="/jobs" className="hover:text-blue-600">Find Jobs</Link>
+                    {(!isLoggedIn || role !== "client") && (
+                      <Link to="/jobs" className="hover:text-blue-600">Find Jobs</Link>
+                    )}
                     <Link to="/freelancers" className="hover:text-blue-600">Find Freelancers</Link>
+                    {isLoggedIn && (
+                      <Link to={`/${role}/dashboard`} className="hover:text-blue-600">Profile</Link>
+                    )}
                 </nav>
                 <div className="flex items-center space-x-4">
                     {isLoggedIn ? (
